@@ -1,0 +1,45 @@
+
+#pragma once
+#include <memory>
+
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+
+#include "wav.hpp"
+
+
+class Audio {
+private:
+  ALCdevice*  device_;
+  ALCcontext* context_;
+
+public:
+  Audio();
+  ~Audio();
+
+  Audio(const Audio& src) = delete;
+  Audio& operator=(const Audio& src) = delete;
+};
+
+class Media {
+private:
+  Wav source_;
+
+  ALuint buf_id_;
+  ALuint src_id_;
+
+public:
+  explicit Media(const std::string& path);
+  ~Media();
+
+  Media(const Media& src) = delete;
+  Media& operator=(const Audio& src) = delete;
+
+  Media* play();
+  Media* stop();
+  Media* pause();
+  Media* setVolume(const float volume);
+  Media* setPitch(const float pitch);
+  Media* enableLoop();
+  Media* disableLoop();
+};
